@@ -1,0 +1,13 @@
+# Default ignored files
+/.idea/workspace.xml
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
+target/
+
+*/.DS_Store

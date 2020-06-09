@@ -1,0 +1,68 @@
+Create table for Employee
+CREATE TABLE `CapitalOneTracker`.`Employee` (
+  `EID` INT NOT NULL,
+  `FirstName` VARCHAR(255) NOT NULL,
+  `LastName` VARCHAR(255) NOT NULL,
+  `Position` ENUM('Associate', 'Team Manager', 'Admin', 'Scrum Master') NULL,
+  `Email` VARCHAR(255) NULL,
+  `WorkingHours` INT NULL,
+  `TeamID` INT NULL,
+  PRIMARY KEY (`EID`),
+  UNIQUE INDEX `EID_UNIQUE` (`EID` ASC));
+
+Create table for Sprints
+CREATE TABLE `CapitalOneTracker`.`Sprints` (
+  `SprintID` INT NOT NULL,
+  `SprintName` VARCHAR(45) NULL,
+  `TeamID` INT NULL,
+  `Completed` TINYINT NULL,
+  `ScrumMasterID` INT NULL,
+  PRIMARY KEY (`SprintID`),
+  UNIQUE INDEX `SprintID_UNIQUE` (`SprintID` ASC));
+
+Create table for Projects
+CREATE TABLE `CapitalOneTracker`.`Projects` (
+  `ProjectID` INT NOT NULL,
+  `ProjectName` VARCHAR(255) NULL,
+  `ProjectManagerID` VARCHAR(255) NULL,
+  PRIMARY KEY (`ProjectID`),
+  UNIQUE INDEX `ProjectID_UNIQUE` (`ProjectID` ASC),
+  CONSTRAINT `EIDtoPIDLinke`
+    FOREIGN KEY (`ProjectID`)
+    REFERENCES `CapitalOneTracker`.`Employee` (`EID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store details of a team’s project';
+
+Create table for Teams
+CREATE TABLE `CapitalOneTracker`.`Teams` (
+  `TeamID` INT NOT NULL,
+  `TeamName` VARCHAR(255) NULL,
+  `TeamManagerID` INT NULL,
+  PRIMARY KEY (`TeamID`),
+  UNIQUE INDEX `TeamID_UNIQUE` (`TeamID` ASC),
+  INDEX `TMIDtoEIDLink_idx` (`TeamManagerID` ASC),
+  CONSTRAINT `TMIDtoEIDLink`
+    FOREIGN KEY (`TeamManagerID`)
+    REFERENCES `CapitalOneTracker`.`Employee` (`EID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store data on the teams at CapitalOne\n';
+
+Create table for Tasks
+CREATE TABLE `CapitalOneTracker`.`Tasks` (
+  `TaskID` INT NOT NULL,
+  `Points` VARCHAR(45) NULL,
+  `Hours` INT NULL,
+  `Completed` ENUM('Y', 'N') NULL,
+  `SprintID` INT NULL,
+  PRIMARY KEY (`TaskID`),
+  INDEX `SIDtoSprintLink_idx` (`SprintID` ASC),
+  CONSTRAINT `SIDtoSprintLink`
+    FOREIGN KEY (`SprintID`)
+    REFERENCES `CapitalOneTracker`.`Sprints` (`SprintID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+COMMENT = 'Table to store information on the tasks in a sprint';
+
+

@@ -1,0 +1,9 @@
+.card {
+    padding:5px;
+    text-align: center;
+    background-color: #d9d7d7;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.card-columns {
+    padding: 0 10px;
+}

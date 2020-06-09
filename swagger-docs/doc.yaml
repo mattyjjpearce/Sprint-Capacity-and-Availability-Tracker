@@ -1,0 +1,131 @@
+swagger: '2.0'
+info:
+  version: '1'
+  title: 'Sprint Capacity Tracker'
+  description: ''
+
+paths:
+  /employees:
+    get:
+      summary: retrieving set of employee
+      description: Fetching list of employees with fields equal to the ones specified in param. 
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: eid
+        required: false
+        type: integer
+        description: Employee ID
+      - in: query
+        name: firstName
+        type: string
+        required: false
+        description: First Name of employee
+      - in: query
+        name: lastName
+        type: string
+        required: false
+        description: Last Name of employee
+      - in: query
+        name: position
+        type: string
+        required: false
+        description: Position of employee.
+      - in: query
+        name: email
+        type: string
+        required: false
+        description: Email of employee
+      - in: query
+        name: teamId
+        type: integer
+        required: false
+        description: The team the employee(s) belong to.
+      responses:
+        200:
+          description: returning all employees which satisfied the condition.
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: employeeRecord
+        schema:
+          $ref: '#/definitions/Employee'
+      responses:
+        201:
+          description: Employee Created
+        400:
+          description: Invalid Columns in employee (containing null, or employee id already exists)
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: employeeRecord
+        schema:
+          $ref: '#/definitions/Employee'
+      responses:
+        201:
+          description: Employee Created (eid does not exist before)
+        204:
+          description: Employee Updated (eid exist before)
+        400:
+          description: Invalid Columns in employee (containing null)
+  /employees/{eid}:
+    get:
+      summary: get employee by id
+      parameters:
+        - in: path
+          name: eid   # Note the name is the same as in the path
+          required: true
+          type: integer
+          minimum: 1
+          description: Employee ID
+      responses:
+        200:
+          description: Employee Found
+    delete:
+      summary: delete employee by id
+      parameters:
+        - in: path
+          name: eid   # Note the name is the same as in the path
+          required: true
+          type: integer
+          minimum: 1
+          description: Employee ID
+      responses:
+        204:
+          description: Employee Deleted
+        400:
+          description: Employee ID does not exist
+      
+definitions:
+  Employee:
+    type: object
+    required:
+    - eid
+    - firstName
+    - lastName
+    - position
+    - email
+    - teamId
+    properties:
+      eid:
+        type: integer
+        format: uuid
+      firstName:
+        type: string
+      lastName:
+        type: string
+      position:
+        type: string
+      email:
+        type: string
+      teamId: 
+        type: integer
