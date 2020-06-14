@@ -1,3 +1,15 @@
+System Description
+
+This system is intended to be used in an office environment as a complete solution to handle employee leave and plan sprints in advance. The system uses an artificial neural network to predict when employees will be on leave. The goal of this is to aid a scrum master or equivalent member of staff to plan sprints based on employee availability and sprint capacity.
+
+The backend is programmed using Java with Spring Boot. Data access is handled by Hibernate. The frontend is a Node.js application. The API consists of 33 endpoints in total. Details regarding the API will be found in the API section of this manual. 
+
+The system is based on 6 main features. Employees, Holidays, EmployeeLeaveInfo, Sprints, Teams and WorkPattern. These features and their meaning will be explained in detail in the SystemTerminology section.
+
+
+
+
+
 
 Build Manual
 
